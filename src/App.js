@@ -1,12 +1,12 @@
-import logo from './logo.svg';
-import './App.css';
-import Body from './component/body';
+
+import "./App.css";
+import Body from "./component/body";
 
 function App() {
   return (
-    <div className="App">
+    <div className="wrapper">
+      
       <Body/>
-
     </div>
   );
 }

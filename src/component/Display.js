@@ -1,6 +1,9 @@
 const Display=()=>{
     return(
-        <div className="Screen">Display</div>
+        <>
+            <div className="display1"></div>
+            <div className="display">0.0</div>
+        </>
     );
 };
 

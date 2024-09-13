@@ -1,10 +1,12 @@
-let displayValue = "0.0";
-const Display=()=>{
+
+const Display=(props)=>{
+    console.log(props);
+    
 
     return(
         <>
-            <div className="display1"></div>
-            <div className="display">{displayValue}</div>
+            <div className="display1">{props.topDisplay}</div>
+            <div className="display">{props.bottomDisplay}</div>
         </>
     );
 };

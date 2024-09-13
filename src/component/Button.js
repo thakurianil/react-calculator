@@ -1,11 +1,13 @@
 const Button = (props) => {
-
-    console.log(props);
+    const cN= props.cN;
+const value = props.value;
     
   return <>
 
-    <div className={props.cN}>{props.value}</div>
+    <div className={cN} onClick>{value}</div>
   </>;
 };
 
 export default Button;
+
+// ()=>opfunction(operator)

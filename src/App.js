@@ -5,8 +5,8 @@ import Display from "./component/Display";
 
 function App() {
   const operatorList = ["/", "x", "*", "-", "+", "=", "%"];
-  const numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const specialCharacterList = [".", "Enter"];
+  // const numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  // const specialCharacterList = [".", "Enter"];
   const [topDisplay, setTopDisplay] = useState("");
   const [bottomDisplay, setBottomDisplay] = useState("0");
 
@@ -45,6 +45,10 @@ function App() {
   const addToDisplay = (str) => {
     let topResult = topDisplay;
     let bottomResult = bottomDisplay;
+    console.log(typeof topResult, topResult);
+
+    console.log(typeof bottomResult, bottomResult);
+
 
     switch (str.toLowerCase()) {
       case "c":
@@ -66,10 +70,12 @@ function App() {
           topResult += str;
         }
         break;
+
       case "=":
-      case "enter":
         bottomResult = calculateValue(topResult);
-        topResult = bottomResult;
+        topResult = String(bottomResult);
+        console.log(typeof topResult, topResult);
+
         break;
       case ".":
         if (allowDot(topResult)) {
@@ -82,7 +88,7 @@ function App() {
     }
 
     setTopDisplay(topResult);
-    if (str === "=" || str === "enter") {
+    if (str === "=") {
       setBottomDisplay(bottomResult);
     }
   };

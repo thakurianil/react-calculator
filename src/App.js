@@ -117,6 +117,8 @@ function App() {
 
   return (
     <div className="wrapper">
+        <h1>Calculator </h1>
+
       <div className="container">
         <Display topDisplay={topDisplay} bottomDisplay={bottomDisplay} />
         {buttons.map((btn, i) => (

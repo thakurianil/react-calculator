@@ -7,29 +7,25 @@ function App() {
   const operatorList = ["/", "x", "*", "-", "+", "=", "%"];
   const numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   const specialCharacterList = [".", "Enter"];
-  let [topDisplay, setTopDisplay] = useState("");
-  let [bottomDisplay, setbottomDisplay] = useState("0");
-  let [result, setResult] = useState("");
+  const [topDisplay, setTopDisplay] = useState("");
+  const [bottomDisplay, setBottomDisplay] = useState("0");
+
   const calculateValue = (operationString) => {
     let result = "";
     try {
       if (operationString === "") {
         result = "0";
       } else {
-        result = eval(operationString);
+        result = eval(operationString.replace(/x/g, "*"));
       }
     } catch (e) {
       result = "0";
     }
     return result;
   };
-  function getLastNumber(numInput) {
-    let highestIndex = {
-      index: 0,
-      symbol: ",",
-    };
-    // ["/", "x", "*", "-", "+", "=", "%"];
 
+  const getLastNumber = (numInput) => {
+    let highestIndex = { index: 0, symbol: "," };
     for (let operator of operatorList) {
       let operatorIndex = numInput.lastIndexOf(operator);
       if (operatorIndex > highestIndex.index) {
@@ -37,31 +33,25 @@ function App() {
         highestIndex.symbol = operator;
       }
     }
-
     let numInputArray = numInput.split(highestIndex.symbol);
-    console.log(numInputArray);
     return numInputArray[numInputArray.length - 1];
-  }
-  function allowDot(numInput) {
-    let lastExpression = getLastNumber(numInput);
-    if (lastExpression.includes(".")) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  };
 
-  let addToDisplay = (str) => {
-    console.log(str);
-    
+  const allowDot = (numInput) => {
+    let lastExpression = getLastNumber(numInput);
+    return !lastExpression.includes(".");
+  };
+
+  const addToDisplay = (str) => {
     let topResult = topDisplay;
     let bottomResult = bottomDisplay;
+
     switch (str.toLowerCase()) {
       case "c":
         topResult = "";
         break;
-      case "del":
-        topResult = topResult.substr(0, topResult.length - 1);
+      case "ac":
+        topResult = topResult.slice(0, -1);
         break;
       case "%":
       case "/":
@@ -70,39 +60,31 @@ function App() {
       case "+":
       case "*":
         if (topResult.length > 0) {
-          if (str == "x") {
+          if (str === "x") {
             str = "*";
           }
-          topResult = topResult + str;
+          topResult += str;
         }
         break;
       case "=":
       case "enter":
+        bottomResult = calculateValue(topResult);
+        topResult = bottomResult;
         break;
       case ".":
         if (allowDot(topResult)) {
-          topResult = topResult + str;
+          topResult += str;
         }
         break;
       default:
-        topResult = topResult + str;
+        topResult += str;
         break;
     }
-    setTopDisplay(topDisplay);
-    bottomResult = calculateValue(topResult);
-    setbottomDisplay(bottomDisplay);
-  };
 
-  const addFunc = (op) => {
-    setResult(result + op);
-  };
-
-  const deleteFunc = () => {
-    setResult("");
-  };
-
-  const evaluateFunc = () => {
-    setResult(eval(result));
+    setTopDisplay(topResult);
+    if (str === "=" || str === "enter") {
+      setBottomDisplay(bottomResult);
+    }
   };
 
   const buttons = [
@@ -126,16 +108,14 @@ function App() {
     { cN: "btn btn-dot", value: "." },
     { cN: "btn btn-equal", value: "=" },
   ];
+
   return (
     <div className="wrapper">
       <div className="container">
-        <Display
-          topDisplay={topDisplay}
-          bottomDisplay={bottomDisplay}
-        ></Display>
-        {buttons.map((btn, i) => {
-          return <ButtonComponent key={i} {...btn} calculatorFunc={addToDisplay}></ButtonComponent>;
-        })}
+        <Display topDisplay={topDisplay} bottomDisplay={bottomDisplay} />
+        {buttons.map((btn, i) => (
+          <ButtonComponent key={i} {...btn} calculatorFunc={addToDisplay} />
+        ))}
       </div>
     </div>
   );

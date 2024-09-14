@@ -4,19 +4,20 @@ import ButtonComponent from "./component/Button";
 import Display from "./component/Display";
 
 function App() {
-  const operatorList = ["/", "x", "*", "-", "+", "=", "%"];
-  // const numberList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-  // const specialCharacterList = [".", "Enter"];
+  const operatorList = ["/", "*", "-", "+", "=", "%"];
+
   const [topDisplay, setTopDisplay] = useState("");
   const [bottomDisplay, setBottomDisplay] = useState("0");
 
   const calculateValue = (operationString) => {
     let result = "";
+    console.log(typeof(operationString));
+    
     try {
-      if (operationString === "") {
+      if (operationString === "" ) {
         result = "0";
       } else {
-        result = eval(operationString.replace(/x/g, "*"));
+        result = eval(operationString);
       }
     } catch (e) {
       result = "0";
@@ -24,52 +25,20 @@ function App() {
     return result;
   };
 
-  const getLastNumber = (numInput) => {
-    let highestIndex = { index: 0, symbol: "," };
-    for (let operator of operatorList) {
-      let operatorIndex = numInput.lastIndexOf(operator);
-      if (operatorIndex > highestIndex.index) {
-        highestIndex.index = operatorIndex;
-        highestIndex.symbol = operator;
-      }
-    }
-    let numInputArray = numInput.split(highestIndex.symbol);
-    return numInputArray[numInputArray.length - 1];
-  };
-
-  const allowDot = (numInput) => {
-    let lastExpression = getLastNumber(numInput);
-    return !lastExpression.includes(".");
-  };
-
   const addToDisplay = (str) => {
+    
     let topResult = topDisplay;
     let bottomResult = bottomDisplay;
-    console.log(typeof topResult, topResult);
-
-    console.log(typeof bottomResult, bottomResult);
-
 
     switch (str.toLowerCase()) {
       case "c":
         topResult = "";
+
         break;
       case "ac":
         topResult = topResult.slice(0, -1);
         break;
-      case "%":
-      case "/":
-      case "x":
-      case "-":
-      case "+":
-      case "*":
-        if (topResult.length > 0) {
-          if (str === "x") {
-            str = "*";
-          }
-          topResult += str;
-        }
-        break;
+ 
 
       case "=":
         bottomResult = calculateValue(topResult);
@@ -77,11 +46,7 @@ function App() {
         console.log(typeof topResult, topResult);
 
         break;
-      case ".":
-        if (allowDot(topResult)) {
-          topResult += str;
-        }
-        break;
+  
       default:
         topResult += str;
         break;

@@ -1,5 +1,3 @@
-// Button are being displayed
-// onclick functions are called to do the operations
 
 const Button = (props) => {
   const cN = props.cN;
@@ -17,4 +15,3 @@ const Button = (props) => {
 
 export default Button;
 
-// ()=>opfunction(operator)

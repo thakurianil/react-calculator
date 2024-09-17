@@ -85,9 +85,9 @@ function App() {
         <h1>Calculator </h1>
 
       <div className="container">
-        {/* passing values from one page to another via props */}
+        
         <Display topDisplay={topDisplay} bottomDisplay={bottomDisplay} />
-        {/* Loading multiple buttons through map operation */}
+        
         {buttons.map((btn, i) => (
           <ButtonComponent key={i} {...btn} calculatorFunc={addToDisplay} />
         ))}

@@ -5,6 +5,8 @@ import Display from "./component/Display";
 
 function App() {
   const operatorList = ["/", "*", "-", "+", "=", "%"];
+  console.log("Hello");
+  
 
   const [topDisplay, setTopDisplay] = useState("");
   const [bottomDisplay, setBottomDisplay] = useState("0");

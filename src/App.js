@@ -13,7 +13,6 @@ function App() {
 
   const calculateValue = (operationString) => {
     let result = "";
-    console.log(typeof(operationString));
     
     try {
       if (operationString === "" ) {
@@ -45,7 +44,6 @@ function App() {
       case "=":
         bottomResult = calculateValue(topResult);
         topResult = String(bottomResult);
-        console.log(typeof topResult, topResult);
 
         break;
   
